@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+   default-init-method="init" default-destroy-method="destroy">
+
+   <bean id="broom" class="eu.noelvaes.housekeeping.services.Broom"
+      scope="prototype" />
+
+   <bean id="vacuum"
+      class="eu.noelvaes.housekeeping.services.VacuumCleaner"
+      scope="prototype" />
+
+   <bean id="sponge"
+      class="eu.noelvaes.housekeeping.services.Sponge" scope="prototype" />
+
+   <bean id="lawnMower"
+      class="eu.noelvaes.housekeeping.services.LawnMower" />
+
+   <bean id="cleaningService"
+      class="eu.noelvaes.housekeeping.services.CleaningServiceImpl">
+      <property name="cleaningTool" ref="broom" />
+      <property name="rate" value="9" />
+   </bean>
+
+   <bean id="gardeningService"
+      class="eu.noelvaes.housekeeping.services.GardeningServiceImpl">
+      <property name="gardeningTool" ref="lawnMower" />
+   </bean>
+
+
+   <bean id="domesticService"
+      class="eu.noelvaes.housekeeping.services.DomesticServiceImpl">
+      <property name="cleaningService" ref="cleaningService" />
+      <property name="gardeningService" ref="gardeningService" />
+   </bean>
+</beans>
